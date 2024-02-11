@@ -1,0 +1,162 @@
+<div class="card">
+  <p-card header="{{displayProfileName}}">
+    <ng-template pTemplate="header">
+      <div class="img-container mb-2">
+        <!-- <img alt="cover-photo" src="../../assets/{{randomImg}}" height="220px" /> -->
+        <div [ngClass]="randomImg==0?'cover-1':'cover-2'"></div>
+        <div class="avatar-container">
+          <p-avatar image="{{avLink}}" styleClass="mr-2" size="xlarge" shape="circle">
+          </p-avatar>
+        </div>
+      </div>
+    </ng-template>
+    <div class="mb-3 flex justify-content-between">
+      <div class="grid">
+        <div class="col">
+          <div class="font-bold" (click)="clickFollow=true;chosenList=followerList;">{{followerCount}}
+          </div>
+          <div class="font-bold">Followers</div>
+        </div>
+        <div class="col">
+          <div class="font-bold" (click)="clickFollowing=true;chosenList=followingList;">{{followingCount}}</div>
+          <div class="font-bold">Following</div>
+        </div>
+        <div class="col">
+          <div class="font-bold">0</div>
+          <div class="font-bold">Posts</div>
+        </div>
+
+      </div>
+      <p-button label="{{follow_label}}" *ngIf="isFollow" (onClick)="onFollow()"></p-button>
+    </div>
+    <p-splitter [panelSizes]="[30, 50,35]" styleClass="mb-5">
+      <ng-template pTemplate>
+        <div class="col flex align-items-center justify-content-center">Panel for Projects</div>
+      </ng-template>
+      <ng-template pTemplate>
+        <p-card header="{{chosenList==followerList?'Followers':'Following'}}" class="list-card">
+          <p-dataView #dv [value]="chosenList">
+            <ng-template let-product pTemplate="listItem">
+              <div class="col-12">
+                <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
+                  <p-avatar image="{{product.avatarUrl}}" styleClass="mr-2" size="xlarge" shape="circle">
+                  </p-avatar>
+                  <div
+                    class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+                    <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+                      <div class="text-2xl font-bold text-900">{{ product.displayName }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </p-dataView>
+        </p-card>
+      </ng-template>
+      <ng-template pTemplate>
+        <div class="mt-3 p-2">
+          <p-accordion multiple="true" [activeIndex]="[0,1,2]">
+            <p-accordionTab>
+              <ng-template pTemplate="header">
+                <span class="flex align-items-center gap-2 w-full">
+                  <span class="font-bold white-space-nowrap">Bio</span>
+                  <i class="pi pi-pencil ml-auto" *ngIf="isEdit" (click)="editBio()"></i>
+                </span>
+              </ng-template>
+              <p>
+                {{displayBio}}
+              </p>
+            </p-accordionTab>
+            <p-accordionTab>
+              <ng-template pTemplate="header">
+                <span class="flex align-items-center gap-2 w-full">
+                  <span class="font-bold white-space-nowrap">Education</span>
+                  <i class="pi pi-plus ml-auto" *ngIf="isEdit" (click)="addEduExp('EDU','ADD')"></i>
+                </span>
+              </ng-template>
+              <p-timeline [value]="eduEvents">
+                <ng-template pTemplate="opposite" let-event>
+                  <small class="p-text-secondary">{{ event?.fromDate }}-{{event?.toDate}}</small>
+                </ng-template>
+                <ng-template pTemplate="content" let-event>
+                  <span class="flex align-items-center gap-2 w-full">
+                    <span class="font-bold white-space-nowrap">{{ event.title }}</span>
+                    <i class="pi pi-pencil ml-auto" *ngIf="isEdit" (click)="editEduExpSection(event,'EDU','EDIT')"></i>
+                  </span>
+                  <p>{{event.instituteName}}</p>
+
+                </ng-template>
+              </p-timeline>
+
+            </p-accordionTab>
+            <p-accordionTab>
+              <ng-template pTemplate="header">
+                <span class="flex align-items-center gap-2 w-full">
+                  <span class="font-bold white-space-nowrap">Experience</span>
+                  <i class="pi pi-plus ml-auto" *ngIf="isEdit" (click)="addEduExp('EXP','ADD')"></i>
+                </span>
+              </ng-template>
+              <p-timeline [value]="expEvents">
+                <ng-template pTemplate="opposite" let-event>
+                  <small class="p-text-secondary">{{ event?.fromDate }}-{{event?.toDate}}</small>
+                </ng-template>
+                <ng-template pTemplate="content" let-event>
+                  <span class="flex align-items-center gap-2 w-full">
+                    <span class="font-bold white-space-nowrap">{{ event.title }}</span>
+                    <i class="pi pi-pencil ml-auto" *ngIf="isEdit" (click)="editEduExpSection(event,'EXP','EDIT')"></i>
+                  </span>
+                  <p>{{event?.companyName}}</p>
+                </ng-template>
+              </p-timeline>
+            </p-accordionTab>
+          </p-accordion>
+        </div>
+      </ng-template>
+    </p-splitter>
+
+  </p-card>
+</div>
+
+<p-dialog header="UPDATE BIO" [(visible)]="visibleBioPopup" [modal]="true" [style]="{ width: '50vw' }"
+  [draggable]="false" [resizable]="false">
+  <div class="flex align-items-center">
+    <span class="mr-2">Bio</span>
+    <textarea rows="1" cols="30" pInputTextarea [(ngModel)]="bioText" (ngModelChange)="changeBio()"></textarea>
+  </div>
+  <p-button class="flex justify-content-end" label="Save" (onClick)="onSave()"></p-button>
+</p-dialog>
+
+<p-dialog header="{{action=='EDIT'?'UPDATE':'ADD'}}  {{type=='EXP'?'EXPERIENCE':'EDUCATION'}}"
+  [(visible)]="visibleEduExpPopup" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+  <div class="grid detail-modal">
+    <div class="col-2 flex flex-column justify-content-around">
+      <div>{{type=='EXP'?'Designation':'Title'}}</div>
+      <div> Start Date</div>
+    </div>
+    <div class="col-4">
+      <input type="text" pInputText [(ngModel)]="designation">
+      <div class="mt-2">
+        <p-calendar [showIcon]="true" [(ngModel)]="expStartDate" view="month" dateFormat="mm/yy" appendTo="body"
+          dataType="string">
+        </p-calendar>
+      </div>
+    </div>
+    <div class="col-2 flex flex-column justify-content-around">
+      <div>{{type=='EXP'?'Company Name':'Institute Name'}}</div>
+      <div> End Date</div>
+    </div>
+    <div class="col-4">
+      <input type="text" pInputText [(ngModel)]="companyName">
+      <div class="mt-2">
+        <p-calendar [showIcon]="true" [(ngModel)]="expEndDate" view="month" dateFormat="mm/yy" appendTo="body"
+          dataType="string">
+        </p-calendar>
+      </div>
+    </div>
+  </div>
+  <div class="flex justify-content-between">
+    <p-button label="Delete {{type=='EXP'?'Experience':'Education'}}" (onClick)="onDelete()" *ngIf="action=='EDIT'">
+    </p-button>
+    <p-button label="Save" (onClick)="onSave()" class="flex justify-content-end"></p-button>
+  </div>
+</p-dialog>

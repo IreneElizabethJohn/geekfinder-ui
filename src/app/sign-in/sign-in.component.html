@@ -1,0 +1,60 @@
+<!-- SIGN IN -->
+<div class="header"><span class="logo-title">Geek</span><span class="title-text">Finder</span></div>
+<p-toast></p-toast>
+<div *ngIf="!displaySignUp && showEvents" class="flex justify-content-around container" @fade>
+
+  <img src="../../assets/Login-amico.png" class="signin-image">
+
+  <div class="flex flex-column align-items-center justify-content-center gap-3 py-5 sign-in">
+    <div class="flex flex-wrap justify-content-center align-items-center ">
+      <div class="p-inputgroup">
+        <span class="p-inputgroup-addon"><i class="pi pi-envelope"></i></span>
+        <input type="email" pInputText placeholder="Email" [(ngModel)]="email">
+      </div>
+    </div>
+    <div *ngIf="isEmailInvalid" class="error-message">Email is required</div>
+    <div class="flex flex-wrap justify-content-center align-items-center ">
+      <div class="p-inputgroup">
+        <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
+        <input type="password" pInputText placeholder="Password" [(ngModel)]="password">
+      </div>
+    </div>
+    <div *ngIf="isPasswordInvalid" class="error-message">Password is required</div>
+    <p-button label="Sign In" icon="pi pi-user" styleClass="w-15rem" (onClick)="signIn()"></p-button>
+    <div><a (click)="register();showEvents = !showEvents;showSlide=!showSlide;"><strong>Create</strong> your account</a>
+    </div>
+  </div>
+</div>
+<!-- SIGN UP -->
+<div class="flex justify-content-around container" *ngIf="displaySignUp">
+  <div class="flex flex-column align-items-center justify-content-center gap-3 py-5">
+    <div class="flex flex-wrap justify-content-center align-items-center ">
+      <div class="p-inputgroup">
+        <span class="p-inputgroup-addon"><i class="pi pi-envelope"></i></span>
+        <input type="email" pInputText placeholder="Email" [(ngModel)]="email">
+      </div>
+    </div>
+    <div *ngIf="isEmailInvalid" class="error-message">Email is required</div>
+    <div class="flex flex-wrap justify-content-center align-items-center">
+      <div class="p-inputgroup">
+        <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+        <input type="text" pInputText placeholder="Display name" [(ngModel)]="newDisplayName">
+      </div>
+    </div>
+    <div *ngIf="isDisplayNameInvalid" class="error-message">Username is required</div>
+    <div class="flex flex-wrap justify-content-center align-items-center ">
+      <div class="p-inputgroup">
+        <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
+        <input type="password" pInputText placeholder="Password" [(ngModel)]="password">
+      </div>
+
+    </div>
+    <div *ngIf="isPasswordInvalid" class="error-message">Password is required</div>
+
+    <p-button label="Sign Up" icon="pi pi-user-plus" styleClass="w-15rem" (onClick)="signUp()">
+    </p-button>
+    <div><a (click)="displaySignInForm();showEvents = !showEvents;">Already registered? <strong>Login</strong></a></div>
+  </div>
+  <img src="../../assets/Team.png">
+
+</div>

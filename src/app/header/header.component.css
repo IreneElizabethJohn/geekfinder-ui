@@ -1,0 +1,23 @@
+:host ::ng-deep {
+  .p-avatar {
+    cursor: pointer;
+  }
+  .p-inputgroup {
+    width: 50%;
+  }
+  .p-menu {
+    position: absolute;
+    top: 67px;
+    right: 4px;
+    z-index: 1;
+  }
+}
+
+.header {
+  height: 80px;
+}
+
+a:link,
+a:visited {
+  text-decoration: none;
+}

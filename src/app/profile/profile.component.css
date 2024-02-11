@@ -1,0 +1,60 @@
+.avatar-container {
+  position: absolute;
+  bottom: -27px;
+  left: 48%;
+}
+
+:host ::ng-deep {
+  .list-card {
+    width: 100%;
+    .p-card {
+      box-shadow: none;
+    }
+  }
+  .p-avatar.p-avatar-xl {
+    width: 5rem;
+    height: 5rem;
+  }
+  .p-card .p-card-title {
+    text-align: center;
+  }
+  .img-container {
+    position: relative;
+  }
+
+  .p-card .p-card-subtitle {
+    text-align: center;
+  }
+
+  .p-accordion {
+    width: 450px;
+  }
+
+  .p-timeline-event-opposite {
+    flex: 0 0 49%;
+  }
+}
+
+.detail-modal {
+  .p-inputtext {
+    width: 94%;
+  }
+}
+
+.cover-1 {
+  height: 220px;
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(121, 9, 48, 1) 35%,
+    rgba(0, 212, 255, 1) 100%
+  );
+}
+.cover-2 {
+  height: 220px;
+  background: radial-gradient(
+    circle,
+    rgba(63, 94, 251, 1) 0%,
+    rgba(252, 70, 107, 1) 100%
+  );
+}

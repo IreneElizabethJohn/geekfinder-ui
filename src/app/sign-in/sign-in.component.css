@@ -1,0 +1,26 @@
+.error-message {
+  color: rgb(211, 64, 64);
+}
+a {
+  cursor: pointer;
+}
+
+img {
+  width: 45%;
+}
+.container {
+  height: 90vh;
+}
+
+:host ::ng-deep .p-button .p-button-icon-left {
+  margin-right: 0;
+}
+strong {
+  color: blueviolet;
+}
+.login-img-container {
+  display: inline;
+}
+.header {
+  padding: 10px 0 0 10px;
+}
