@@ -5,6 +5,7 @@ import { MenuItem } from 'primeng/api';
 import { UserDetails } from '../models/user.model';
 import { FileUpload } from 'primeng/fileupload';
 import { HttpHeaders } from '@angular/common/http';
+import { PostService } from '../post/post.service';
 
 @Component({
   selector: 'app-header',
@@ -29,7 +30,11 @@ export class HeaderComponent {
     { label: 'Normal', value: 'off' },
     { label: 'Project', value: 'on' },
   ];
-  constructor(private appService: AppService, private router: Router) {}
+  constructor(
+    private appService: AppService,
+    private router: Router,
+    private postService: PostService
+  ) {}
 
   ngOnInit() {
     const userId = localStorage.getItem('id');
@@ -81,14 +86,14 @@ export class HeaderComponent {
 
   onFileSelect(event: any) {
     const file = this.fileInput._files[0];
-    this.appService.getSignedUrl(file.name, file.type).subscribe((res) => {
+    this.postService.getSignedUrl(file.name, file.type).subscribe((res) => {
       const blob = new Blob([file], { type: file.type });
       this.key = res.key;
       const headers = new HttpHeaders({
         'Content-Type': file.type,
         'Content-Disposition': `attachment; filename="${file.name}"`,
       });
-      this.appService
+      this.postService
         .uploadImage(res.presignedPUTURL, blob, headers)
         .subscribe((res) => {
           this.fileInput.progress = 100;
@@ -105,8 +110,7 @@ export class HeaderComponent {
     if (this.fileInput._files.length > 0) {
       payload.key = this.key;
     }
-    console.log('submit payload', payload);
-    this.appService.createPost(payload).subscribe(() => {
+    this.postService.createPost(payload).subscribe(() => {
       this.openPostModal = false;
       this.appService.setData(localStorage.getItem('id'), 'signedUser');
       this.router.navigateByUrl('/home');

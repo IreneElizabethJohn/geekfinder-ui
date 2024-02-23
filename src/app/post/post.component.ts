@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { AppService } from '../app.service';
 import { Router } from '@angular/router';
+import { PostService } from './post.service';
 
 @Component({
   selector: 'app-post',
@@ -15,7 +16,11 @@ export class PostComponent implements OnChanges {
   liked: any = [];
   @Input() inputData: any;
   userType: any;
-  constructor(private appService: AppService, private router: Router) {}
+  constructor(
+    private appService: AppService,
+    private router: Router,
+    private postService: PostService
+  ) {}
   ngOnChanges() {
     this.inputData.forEach((post: any, i: number) => {
       const typeIndex = post.ownerId._id == localStorage.getItem('id');
@@ -49,7 +54,7 @@ export class PostComponent implements OnChanges {
     this.liked[index] = true;
     const postId = post._id;
     const payload = { userId: localStorage.getItem('id') };
-    this.appService.addLikes(payload, postId).subscribe((x) => {
+    this.postService.addLikes(payload, postId).subscribe((x) => {
       post.likes.length++;
     });
   }
@@ -60,7 +65,7 @@ export class PostComponent implements OnChanges {
       comment: this.commentText,
     };
 
-    this.appService.addComments(payload, postId).subscribe((x) => {
+    this.postService.addComments(payload, postId).subscribe((x) => {
       this.commentText = '';
       post.comments.length++;
       this.getComments(post._id);
@@ -76,7 +81,7 @@ export class PostComponent implements OnChanges {
     this.showRequests[index] = true;
   }
   getComments(postId: string) {
-    this.appService.getComments(postId).subscribe((resp: any) => {
+    this.postService.getComments(postId).subscribe((resp: any) => {
       this.comments = resp.comments;
     });
   }
@@ -85,9 +90,11 @@ export class PostComponent implements OnChanges {
     const payload = {
       userId: localStorage.getItem('id'),
     };
-    this.appService.addJoinRequests(payload, post._id).subscribe((res: any) => {
-      this.isClicked[index] = true;
-    });
+    this.postService
+      .addJoinRequests(payload, post._id)
+      .subscribe((res: any) => {
+        this.isClicked[index] = true;
+      });
   }
 
   callSpecificProfile(ownerId: string) {

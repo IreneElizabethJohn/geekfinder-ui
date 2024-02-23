@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AppService } from '../app.service';
+import { PostService } from '../post/post.service';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -7,7 +7,7 @@ import { AppService } from '../app.service';
   styleUrls: ['./user-dashboard.component.css'],
 })
 export class UserDashboardComponent {
-  constructor(private appService: AppService) {}
+  constructor(private postService: PostService) {}
   userId: string = '';
   posts: any = [];
   liked: any = [];
@@ -15,7 +15,7 @@ export class UserDashboardComponent {
   showRequests: any = [];
   isClicked: any = [];
   ngOnInit() {
-    this.appService
+    this.postService
       .getFeed(localStorage.getItem('id')!)
       .subscribe((resp: any) => {
         this.posts = resp.relevantPosts;
