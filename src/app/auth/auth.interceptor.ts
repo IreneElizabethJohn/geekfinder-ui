@@ -9,7 +9,11 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  private excludedUrls: string[] = ['/users/sign-in', '/users/sign-up'];
+  private excludedUrls: string[] = [
+    '/users/sign-in',
+    '/users/sign-up',
+    'https://geekfinderbucket.s3.amazonaws.com/',
+  ];
   constructor() {}
 
   intercept(
@@ -27,6 +31,8 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   isExcludedUrls(url: string) {
-    return this.excludedUrls.some((excludedUrl) => url.endsWith(excludedUrl));
+    return this.excludedUrls.some(
+      (excludedUrl) => url.endsWith(excludedUrl) || url.startsWith(excludedUrl)
+    );
   }
 }

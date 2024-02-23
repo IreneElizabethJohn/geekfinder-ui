@@ -13,16 +13,16 @@
     <div class="mb-3 flex justify-content-between">
       <div class="grid">
         <div class="col">
-          <div class="font-bold" (click)="clickFollow=true;chosenList=followerList;">{{followerCount}}
+          <div class="font-bold" (click)="displayPosts=false;chosenList=followerList;">{{followerCount}}
           </div>
           <div class="font-bold">Followers</div>
         </div>
         <div class="col">
-          <div class="font-bold" (click)="clickFollowing=true;chosenList=followingList;">{{followingCount}}</div>
+          <div class="font-bold" (click)="displayPosts=false;chosenList=followingList;">{{followingCount}}</div>
           <div class="font-bold">Following</div>
         </div>
         <div class="col">
-          <div class="font-bold">0</div>
+          <div class="font-bold" (click)="displayPosts=true">{{posts.length}}</div>
           <div class="font-bold">Posts</div>
         </div>
 
@@ -34,7 +34,10 @@
         <div class="col flex align-items-center justify-content-center">Panel for Projects</div>
       </ng-template>
       <ng-template pTemplate>
-        <p-card header="{{chosenList==followerList?'Followers':'Following'}}" class="list-card">
+        <div *ngIf="displayPosts">
+          <app-post [inputData]="posts"></app-post>
+        </div>
+        <p-card header="{{chosenList==followerList?'Followers':'Following'}}" class="list-card" *ngIf="!displayPosts">
           <p-dataView #dv [value]="chosenList">
             <ng-template let-product pTemplate="listItem">
               <div class="col-12">

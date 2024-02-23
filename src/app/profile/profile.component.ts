@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { AppService } from '../app.service';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Education, Experience, UserDetails } from '../models/user.model';
 
 @Component({
@@ -43,6 +42,8 @@ export class ProfileComponent {
   followerList = [];
   followingList = [];
   chosenList = [];
+  posts = [];
+  displayPosts = true;
 
   constructor(private appService: AppService) {}
 
@@ -58,7 +59,6 @@ export class ProfileComponent {
       });
     });
   }
-
   commonApi(data: UserDetails) {
     this.displayProfileName = data.displayName;
     this.avLink = data.avatarUrl;
@@ -69,6 +69,7 @@ export class ProfileComponent {
     this.followingList = data.following;
     this.followerCount = data.followers.length;
     this.followingCount = data.following.length;
+    this.posts = data.posts;
     this.userData = data;
     this.randomImg =
       this.random_images[Math.floor(Math.random() * this.random_images.length)];

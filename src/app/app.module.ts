@@ -33,6 +33,9 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ToastModule } from 'primeng/toast';
 import { DataViewModule } from 'primeng/dataview';
 import { FileUploadModule } from 'primeng/fileupload';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { TimeAgoPipe } from 'src/utils/timeAgo.pipe';
+import { PostComponent } from './post/post.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +45,8 @@ import { FileUploadModule } from 'primeng/fileupload';
     ProjectComponent,
     ProfileComponent,
     UserDashboardComponent,
+    TimeAgoPipe,
+    PostComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,6 +74,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     ToastModule,
     DataViewModule,
     FileUploadModule,
+    SelectButtonModule,
   ],
   providers: [
     {

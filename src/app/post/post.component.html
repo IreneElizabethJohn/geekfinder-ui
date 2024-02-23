@@ -1,0 +1,58 @@
+<p-card *ngFor="let post of inputData;index as i" class="p-3">
+  <div class="flex justify-content-start">
+    <div>
+      <p-avatar image="{{post.ownerId.avatarUrl}}" styleClass="mr-2" size="large" shape="circle">
+      </p-avatar>
+    </div>
+    <div class="flex flex-column">
+      <div class="font-bold" (click)="callSpecificProfile(post.ownerId._id)">{{post.ownerId.displayName}}</div>
+      <div>{{post.createdAt|timeAgo}}</div>
+    </div>
+
+  </div>
+  {{post.content}}
+  <div *ngIf="post.imageUrl">
+    <img src="{{post.imageUrl}}" alt="postImage" height="50%" width="50%">
+  </div>
+
+  <div class="flex justify-content-between mt-3">
+    <div class="flex justify-content-start">
+      <div class="p-2" (click)="addLikes(post,i)"><i
+          [ngClass]="liked[i]?'pi pi-thumbs-up-fill':'pi pi-thumbs-up'"></i>{{post.likes.length}}</div>
+      <div class="p-2"><i class="pi pi-comment" (click)="displayComments(i,post)"></i>{{post.comments.length}}
+      </div>
+    </div>
+
+    <div *ngIf="userType == 'signedUser'"><i class="pi pi-user" (click)="displayRequests(i)"></i></div>
+    <div *ngIf="userType == 'searchUser'"><i [ngClass]="isClicked[i]?'pi pi-user-minus':'pi pi-user-plus'"
+        (click)="addJoinRequests(post,i)"></i></div>
+
+    <p-listbox [options]="post.joinRequests" *ngIf="showRequests[i]">
+      <ng-template let-item pTemplate="item">
+
+        <div style="display: flex; align-items: center;">
+          <p-avatar image="{{item.avatarUrl}}" styleClass="mr-2" size="large" shape="circle">
+          </p-avatar>
+          <span>{{item.displayName}}</span>
+          <button pButton type="button" label="Add" severity="info"></button>
+          <button pButton type="button" label="Delete" severity="danger"></button>
+        </div>
+      </ng-template>
+    </p-listbox>
+  </div>
+  <div *ngIf="showComment[i]">
+    <span class="p-input-icon-right">
+      <i class="pi pi-send" (click)="addComment(post,i)"></i>
+      <input type="text" pInputText [(ngModel)]="commentText" (keydown.enter)="addComment(post,i)" />
+    </span>
+    <div class="flex" *ngFor="let item of comments">
+      <p-avatar image="{{item.owner.avatarUrl}}" styleClass="mr-2" size="large" shape="circle">
+      </p-avatar>
+      <div class="flex flex-column">
+        <div class="font-bold">{{item.owner.displayName}}</div>
+        <div>{{item.comment}}</div>
+      </div>
+    </div>
+  </div>
+
+</p-card>

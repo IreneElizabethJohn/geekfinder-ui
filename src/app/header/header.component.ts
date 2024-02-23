@@ -1,13 +1,11 @@
 import { Component, ViewChild, ViewChildren } from '@angular/core';
-import { Menu } from 'primeng/menu';
 import { AppService } from '../app.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { UserDetails } from '../models/user.model';
-interface UploadEvent {
-  originalEvent: Event;
-  files: File[];
-}
+import { FileUpload } from 'primeng/fileupload';
+import { HttpHeaders } from '@angular/common/http';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -23,6 +21,14 @@ export class HeaderComponent {
   loggedUserData!: UserDetails;
 
   openPostModal: boolean = false;
+  chosenType = 'off';
+  postDescription = '';
+  key: string = '';
+  @ViewChild('fileInput') fileInput!: FileUpload;
+  typeOptions = [
+    { label: 'Normal', value: 'off' },
+    { label: 'Project', value: 'on' },
+  ];
   constructor(private appService: AppService, private router: Router) {}
 
   ngOnInit() {
@@ -73,9 +79,45 @@ export class HeaderComponent {
     this.router.navigateByUrl('/home/profile');
   }
 
-  onUpload(event: UploadEvent) {
-    console.log(event);
-    // this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded with Basic Mode' });
-    //getsignedurl api then use that url to do put call to aws(upload) and add post->post call (key pass)
+  onFileSelect(event: any) {
+    const file = this.fileInput._files[0];
+    this.appService.getSignedUrl(file.name, file.type).subscribe((res) => {
+      const blob = new Blob([file], { type: file.type });
+      this.key = res.key;
+      const headers = new HttpHeaders({
+        'Content-Type': file.type,
+        'Content-Disposition': `attachment; filename="${file.name}"`,
+      });
+      this.appService
+        .uploadImage(res.presignedPUTURL, blob, headers)
+        .subscribe((res) => {
+          this.fileInput.progress = 100;
+        });
+    });
+  }
+
+  onSubmit() {
+    const payload: any = {
+      ownerId: localStorage.getItem('id'),
+      content: this.postDescription,
+      type: this.chosenType == 'off' ? 'N' : 'P',
+    };
+    if (this.fileInput._files.length > 0) {
+      payload.key = this.key;
+    }
+    console.log('submit payload', payload);
+    this.appService.createPost(payload).subscribe(() => {
+      this.openPostModal = false;
+      this.appService.setData(localStorage.getItem('id'), 'signedUser');
+      this.router.navigateByUrl('/home');
+      this.router.navigateByUrl('/home/profile');
+    });
+  }
+
+  addPost() {
+    this.openPostModal = true;
+    this.postDescription = '';
+    this.chosenType = 'off';
+    this.fileInput.clear();
   }
 }

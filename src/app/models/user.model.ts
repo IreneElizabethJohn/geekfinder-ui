@@ -26,6 +26,8 @@ export interface UserDetails {
   following: [];
   followers: [];
   userType?: string;
+  relevantPosts: [];
+  posts: [];
 }
 export interface Following {
   _id: string;

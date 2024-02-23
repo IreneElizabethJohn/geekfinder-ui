@@ -11,6 +11,9 @@
     right: 4px;
     z-index: 1;
   }
+  .p-selectbutton.p-buttonset.p-component {
+    display: inline;
+  }
 }
 
 .header {
