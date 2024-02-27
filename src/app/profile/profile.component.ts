@@ -50,8 +50,8 @@ export class ProfileComponent {
   ngOnInit() {
     this.appService.apiData$.subscribe((data) => {
       this.userType = data.userType!;
-      this.follow_label = 'Follow';
       this.chosenList = [];
+      this.displayPosts = true;
       this.appService.getUserDetails(data.id).subscribe({
         next: (res: any) => {
           this.commonApi(res);
@@ -83,11 +83,14 @@ export class ProfileComponent {
       const index = data.followers.findIndex((item: any) => item._id == id);
       if (index != -1) {
         this.follow_label = 'Following';
+      } else {
+        this.follow_label = 'Follow';
       }
     }
   }
 
-  editBio() {
+  editBio(event: MouseEvent) {
+    event.stopPropagation();
     this.visibleBioPopup = true;
   }
 
@@ -122,7 +125,8 @@ export class ProfileComponent {
     this.action = action;
   }
 
-  addEduExp(type: string, action: string) {
+  addEduExp(type: string, action: string, event: MouseEvent) {
+    event.stopPropagation();
     this.visibleEduExpPopup = true;
     this.type = type;
     this.designation = '';
@@ -185,8 +189,6 @@ export class ProfileComponent {
         };
       }
     }
-
-    console.log('payload', this.finalPayload);
 
     this.appService
       .updateUserDetails(localStorage.getItem('id')!, this.finalPayload)

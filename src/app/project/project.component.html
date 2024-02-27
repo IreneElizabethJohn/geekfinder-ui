@@ -1,1 +1,19 @@
-<p>project works!</p>
+<div class="p-3">
+  <div class="project-title font-bold">Projects</div>
+  <p-dataView #dv [value]="projectList">
+    <ng-template let-product pTemplate="listItem">
+      <div class="col-11">
+        <div class="flex flex-column xl:flex-row xl:align-items-start p-3 ">
+          <p-avatar icon="pi pi-user" styleClass="mr-2" size="large" shape="circle">
+          </p-avatar>
+          <div
+            class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+            <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+              <div class="font-bold">{{ product.displayName }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-dataView>
+</div>

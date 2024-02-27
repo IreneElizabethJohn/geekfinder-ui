@@ -1,0 +1,10 @@
+.project-title {
+  text-align: center;
+}
+
+:host ::ng-deep {
+  .p-dataview.p-dataview-list .p-dataview-content > .p-grid > div {
+    border: none;
+    border-width: 0;
+  }
+}

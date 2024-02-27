@@ -1,0 +1,28 @@
+.comment-box {
+  padding: 6px;
+  background: #d3d3d34d;
+  border-radius: 13px;
+  width: 100%;
+}
+.list-container {
+  width: 100%;
+}
+:host ::ng-deep {
+  .p-input-icon-right,
+  .p-input-icon-right > .p-inputtext {
+    width: 100%;
+  }
+
+  p-listbox {
+    position: absolute;
+    top: 18px;
+    right: 0;
+    z-index: 1;
+    width: 25rem;
+  }
+}
+
+.request-icon {
+  align-self: center;
+  position: relative;
+}

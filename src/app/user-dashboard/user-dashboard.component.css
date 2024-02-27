@@ -1,0 +1,13 @@
+app-post {
+  width: 61%;
+}
+
+:host ::ng-deep {
+  .p-splitter-horizontal > .p-splitter-gutter {
+    width: 0px !important;
+  }
+
+  .p-splitter {
+    border: none;
+  }
+}

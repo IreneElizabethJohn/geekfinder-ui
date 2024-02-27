@@ -1,6 +1,6 @@
-import { Component, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { AppService } from '../app.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { UserDetails } from '../models/user.model';
 import { FileUpload } from 'primeng/fileupload';

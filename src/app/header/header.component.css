@@ -14,6 +14,9 @@
   .p-selectbutton.p-buttonset.p-component {
     display: inline;
   }
+  .p-autocomplete .p-autocomplete-input {
+    width: 30rem;
+  }
 }
 
 .header {

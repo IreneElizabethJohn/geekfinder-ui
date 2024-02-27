@@ -10,7 +10,7 @@ import { PostService } from './post.service';
 })
 export class PostComponent implements OnChanges {
   showComment: any = [];
-  commentText: string = '';
+  commentText: string[] = [];
   comments: any = [];
   showRequests: any = [];
   liked: any = [];
@@ -42,7 +42,6 @@ export class PostComponent implements OnChanges {
       const requestedIndex = post.joinRequests.findIndex((req: any) =>
         req._id ? req._id : req == localStorage.getItem('id')
       );
-      console.log('req index', requestedIndex);
       if (requestedIndex != -1) {
         this.isClicked[i] = true;
       } else {
@@ -62,27 +61,27 @@ export class PostComponent implements OnChanges {
     const postId = post._id;
     const payload = {
       userId: localStorage.getItem('id'),
-      comment: this.commentText,
+      comment: this.commentText[index],
     };
 
     this.postService.addComments(payload, postId).subscribe((x) => {
-      this.commentText = '';
+      this.commentText[index] = '';
       post.comments.length++;
-      this.getComments(post._id);
+      this.getComments(post._id, index);
     });
   }
-
   displayComments(index: number, post: any) {
-    this.showComment[index] = true;
-    console.log('cmmnt index', index);
-    this.getComments(post._id);
+    this.showComment[index] = !this.showComment[index];
+    this.showRequests[index] = false;
+    this.getComments(post._id, index);
   }
   displayRequests(index: number) {
-    this.showRequests[index] = true;
+    this.showRequests[index] = !this.showRequests[index];
+    this.showComment[index] = false;
   }
-  getComments(postId: string) {
+  getComments(postId: string, index: number) {
     this.postService.getComments(postId).subscribe((resp: any) => {
-      this.comments = resp.comments;
+      this.comments[index] = resp.comments;
     });
   }
   isClicked: any = [];
