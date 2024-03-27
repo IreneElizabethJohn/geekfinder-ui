@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { AppService } from '../app.service';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
@@ -6,6 +6,7 @@ import { UserDetails } from '../models/user.model';
 import { FileUpload } from 'primeng/fileupload';
 import { HttpHeaders } from '@angular/common/http';
 import { PostService } from '../post/post.service';
+import { Menu } from 'primeng/menu';
 
 @Component({
   selector: 'app-header',
@@ -30,6 +31,8 @@ export class HeaderComponent {
     { label: 'Normal', value: 'off' },
     { label: 'Project', value: 'on' },
   ];
+  @ViewChild('menu') menu!: Menu;
+  projectName: string = '';
   constructor(
     private appService: AppService,
     private router: Router,
@@ -72,8 +75,9 @@ export class HeaderComponent {
     }
   }
 
-  showMenu() {
+  showMenu(event: any) {
     this.isMenuVisible = !this.isMenuVisible;
+    // event.stopPropagation();
   }
 
   callSearchProfile(item: any) {
@@ -102,11 +106,22 @@ export class HeaderComponent {
   }
 
   onSubmit() {
-    const payload: any = {
-      ownerId: localStorage.getItem('id'),
-      content: this.postDescription,
-      type: this.chosenType == 'off' ? 'N' : 'P',
-    };
+    let payload: any;
+    if (this.chosenType == 'off') {
+      payload = {
+        ownerId: localStorage.getItem('id'),
+        content: this.postDescription,
+        type: 'N',
+      };
+    }
+    if (this.chosenType == 'on' && this.projectName.length > 0) {
+      payload = {
+        ownerId: localStorage.getItem('id'),
+        content: this.postDescription,
+        type: 'P',
+        projectName: this.projectName,
+      };
+    }
     if (this.fileInput._files.length > 0) {
       payload.key = this.key;
     }
@@ -123,5 +138,21 @@ export class HeaderComponent {
     this.postDescription = '';
     this.chosenType = 'off';
     this.fileInput.clear();
+    this.projectName = '';
   }
+
+  @HostListener('document:scroll', ['$event'])
+  onScroll(event: Event) {
+    this.isMenuVisible = false;
+  }
+
+  //if we need to remove p-menu on click
+  // @HostListener('document:click', ['$event'])
+  // onClick(event: MouseEvent) {
+  //   console.log('event target', event.target);
+  //   console.log('meny native elemnt', this.menu);
+  //   if (!this.menu.el.nativeElement.contains(event.target)) {
+  //     this.isMenuVisible = false;
+  //   }
+  // }
 }

@@ -44,6 +44,7 @@ export class ProfileComponent {
   chosenList = [];
   posts = [];
   displayPosts = true;
+  isDisabledonFollowing: boolean = false;
 
   constructor(private appService: AppService) {}
 
@@ -52,6 +53,7 @@ export class ProfileComponent {
       this.userType = data.userType!;
       this.chosenList = [];
       this.displayPosts = true;
+      this.userId = data.id;
       this.appService.getUserDetails(data.id).subscribe({
         next: (res: any) => {
           this.commonApi(res);
@@ -83,8 +85,10 @@ export class ProfileComponent {
       const index = data.followers.findIndex((item: any) => item._id == id);
       if (index != -1) {
         this.follow_label = 'Following';
+        this.isDisabledonFollowing = true;
       } else {
         this.follow_label = 'Follow';
+        this.isDisabledonFollowing = false;
       }
     }
   }

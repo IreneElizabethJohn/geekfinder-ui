@@ -36,6 +36,11 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { TimeAgoPipe } from 'src/utils/timeAgo.pipe';
 import { PostComponent } from './post/post.component';
+import { ProjectListCardComponent } from './project-list-card/project-list-card.component';
+import { TabViewModule } from 'primeng/tabview';
+import { DragDropModule } from 'primeng/dragdrop';
+import { TagModule } from 'primeng/tag';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,6 +52,7 @@ import { PostComponent } from './post/post.component';
     UserDashboardComponent,
     TimeAgoPipe,
     PostComponent,
+    ProjectListCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,6 +81,9 @@ import { PostComponent } from './post/post.component';
     DataViewModule,
     FileUploadModule,
     SelectButtonModule,
+    TabViewModule,
+    DragDropModule,
+    TagModule,
   ],
   providers: [
     {

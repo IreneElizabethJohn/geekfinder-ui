@@ -2,6 +2,7 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { AppService } from '../app.service';
 import { Router } from '@angular/router';
 import { PostService } from './post.service';
+import { ProjectService } from '../project/project.service';
 
 @Component({
   selector: 'app-post',
@@ -16,10 +17,15 @@ export class PostComponent implements OnChanges {
   liked: any = [];
   @Input() inputData: any;
   userType: any;
+  @Input() chosenType: any;
+  selectedId: string = '';
+  changedIndex: number = -1;
+
   constructor(
     private appService: AppService,
     private router: Router,
-    private postService: PostService
+    private postService: PostService,
+    private projectService: ProjectService
   ) {}
   ngOnChanges() {
     this.inputData.forEach((post: any, i: number) => {
@@ -100,5 +106,41 @@ export class PostComponent implements OnChanges {
     this.appService.setData(ownerId, this.userType);
     this.router.navigateByUrl('/home');
     this.router.navigateByUrl('/home/profile');
+  }
+
+  addCollaborator(
+    projectName: string,
+    ownerId: string,
+    collaboratorId: string,
+    index: number
+  ) {
+    const payload = {
+      projectName: projectName,
+      ownerId: ownerId,
+      collaboratorId: collaboratorId,
+    };
+    this.projectService.addCollaborator(payload).subscribe((res) => {
+      this.removeFromListBox();
+      this.showRequests[index] = false;
+    });
+  }
+
+  removeJoinRequest(postId: string, userId: string, index: number) {
+    this.postService.removeJoinRequest(postId, userId).subscribe((res) => {
+      this.removeFromListBox();
+      this.showRequests[index] = false;
+    });
+  }
+
+  removeFromListBox() {
+    const index = this.inputData[this.changedIndex].joinRequests.findIndex(
+      (req: any) => req._id == this.selectedId
+    );
+    this.inputData[this.changedIndex].joinRequests.splice(index, 1);
+  }
+
+  onSelectionChange(event: any, index: number) {
+    this.selectedId = event.value._id;
+    this.changedIndex = index;
   }
 }

@@ -1,6 +1,6 @@
 <div class="flex justify-content-between align-items-center header">
   <a routerLink="/home/dashboard">
-    <div class="ml-2"><span class="logo-title">Geek</span><span class="title-text">Finder</span></div>
+    <div class="ml-2 p-4"><span class="logo-title">Geek</span><span class="title-text">Finder</span></div>
   </a>
 
   <span class="p-float-label">
@@ -11,13 +11,13 @@
         </div>
       </ng-template>
     </p-autoComplete>
-    <label for="float-label"><i class="pi pi-search mr-1"></i> Search</label>
+    <label for="float-label"><i class="pi pi-search mr-1"></i> Search for users, projects</label>
   </span>
 
 
-  <div class="flex justify-content-between align-items-center">
+  <div class="flex justify-content-between align-items-center mr-3">
     <p-button label="Add Post" class="mr-3" (onClick)="addPost()"></p-button>
-    <p-avatar image="{{avatarLink}}" styleClass="mr-2" size="xlarge" shape="circle" (click)="showMenu()">
+    <p-avatar image="{{avatarLink}}" styleClass="mr-2" size="xlarge" shape="circle" (click)="showMenu($event)">
     </p-avatar>
   </div>
 </div>
@@ -39,8 +39,14 @@
     </span>
   </div>
 
+  <div class="mb-2" *ngIf="chosenType=='on'">
+    <div class="mb-2 font-bold">Add Project Name</div>
+    <input type="text" pInputText [(ngModel)]="projectName">
+  </div>
+  <div class="text-danger mt-1 mb-2" *ngIf="projectName.length==0 && chosenType=='on'">Project name is required</div>
+
   <p-fileUpload #fileInput name="myfile[]" [showUploadButton]="false" [showCancelButton]="false"
-    (onSelect)="onFileSelect($event)" chooseLabel="Choose File to Upload">
+    (onSelect)="onFileSelect($event)" chooseLabel="Choose Image to Upload" accept="image/*">
   </p-fileUpload>
 
   <div class="flex justify-content-end mt-2">

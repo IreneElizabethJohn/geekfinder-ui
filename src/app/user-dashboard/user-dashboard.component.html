@@ -1,8 +1,26 @@
-<p-splitter [panelSizes]="[30, 70]" styleClass="mb-5">
-  <ng-template pTemplate>
-    <app-project></app-project>
-  </ng-template>
-  <ng-template pTemplate>
+<div class="flex justify-content-around gap-3">
+  <div class="project-container">
+    <project-list-card [id]="userId"></project-list-card>
+  </div>
+  <div class="post-container">
     <app-post [inputData]="posts"></app-post>
-  </ng-template>
-</p-splitter>
+  </div>
+  <div class="tech-news-container p-3">
+    <div class="project-title font-bold text-center mb-3 text-xl">What's happening?</div>
+    <div class="flex flex-column justify-content-start align-items-center gap-2">
+      <p-card *ngFor="let article of articles;">
+        <div class="flex">
+          <div class="flex flex-column ">
+            <a href="{{article.url}}">
+              <div class="font-bold">{{article.title}}</div>
+            </a>
+            <div class="mt-2"><a href="{{article.source.url}}"><i>{{article.source.name}}</i></a> |
+              {{article.publishedAt|timeAgo}}
+            </div>
+          </div>
+          <img src="{{article.image}}" height="80px" width="80px" class="p-1">
+        </div>
+      </p-card>
+    </div>
+  </div>
+</div>

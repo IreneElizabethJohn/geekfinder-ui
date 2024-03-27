@@ -54,4 +54,9 @@ export class AppService {
       environment.apiUrl + `users/${localStorage.getItem('id')}/following`;
     return this.http.post<UserDetails>(url, payload);
   }
+
+  getUserProjects(id: string) {
+    const url = environment.apiUrl + `users/${id}/projects`;
+    return this.http.get(url);
+  }
 }

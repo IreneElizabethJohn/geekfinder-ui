@@ -28,6 +28,8 @@ export interface UserDetails {
   userType?: string;
   relevantPosts: [];
   posts: [];
+  postType?: string;
+  projects: [];
 }
 export interface Following {
   _id: string;

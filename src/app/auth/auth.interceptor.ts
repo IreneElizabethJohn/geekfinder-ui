@@ -13,6 +13,7 @@ export class AuthInterceptor implements HttpInterceptor {
     '/users/sign-in',
     '/users/sign-up',
     'https://geekfinderbucket.s3.amazonaws.com/',
+    'https://gnews.io/api/v4/',
   ];
   constructor() {}
 

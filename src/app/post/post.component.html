@@ -13,21 +13,24 @@
 
   </div>
   <div class="p-3">{{post.content}}</div>
-  <div *ngIf="post.imageUrl">
+  <div *ngIf="post.imageUrl" class="post-image">
     <img src="{{post.imageUrl}}" alt="postImage" height="50%" width="50%">
   </div>
 
   <div class="flex justify-content-between mt-3">
     <div class="flex justify-content-start">
       <div class="p-2" (click)="addLikes(post,i)"><i
-          [ngClass]="liked[i]?'pi pi-thumbs-up-fill mr-1':'pi pi-thumbs-up mr-1'"></i>{{post.likes.length}}</div>
-      <div class="p-2"><i class="pi pi-comment mr-1" (click)="displayComments(i,post)"></i>{{post.comments.length}}
+          [ngClass]="liked[i]?'pi pi-thumbs-up-fill mr-1 cursor-pointer':'pi pi-thumbs-up mr-1 cursor-pointer'"></i>{{post.likes.length}}
+      </div>
+      <div class="p-2"><i class="pi pi-comment mr-1 cursor-pointer"
+          (click)="displayComments(i,post)"></i>{{post.comments.length}}
       </div>
     </div>
 
-    <div *ngIf="userType == 'signedUser'" class="request-icon"><i class="pi pi-user mr-1"
-        (click)="displayRequests(i)"></i>{{post.joinRequests.length}}
-      <p-listbox [options]="post.joinRequests" *ngIf="showRequests[i] && post.joinRequests.length>0">
+    <div *ngIf="userType == 'signedUser' && post.type=='P'" class="request-icon"><i
+        class="pi pi-user mr-1 cursor-pointer" (click)="displayRequests(i)"></i>{{post.joinRequests.length}}
+      <p-listbox [options]="post.joinRequests" *ngIf="showRequests[i] && post.joinRequests.length>0"
+        (onChange)="onSelectionChange($event,i)">
         <ng-template let-item pTemplate="item">
           <div class="flex justify-content-between align-items-center list-container">
             <div>
@@ -37,22 +40,25 @@
                 {{item.displayName}}</div>
             </div>
             <div class="flex">
-              <p-button label="Add" styleClass="p-button-outlined w-15 mr-1"></p-button>
-              <p-button label="Delete" styleClass="p-button-danger p-button-outlined w-15"></p-button>
+              <p-button label="Add" styleClass="p-button-outlined w-15 mr-1"
+                (onClick)="addCollaborator(post.projectName,post.ownerId._id,item._id,i)"></p-button>
+              <p-button label="Delete" styleClass="p-button-danger p-button-outlined w-15"
+                (onClick)="removeJoinRequest(post._id,item._id,i)"></p-button>
             </div>
           </div>
         </ng-template>
       </p-listbox>
     </div>
-    <div *ngIf="userType == 'searchUser'" class="request-icon"><i
-        [ngClass]="isClicked[i]?'pi pi-user-minus':'pi pi-user-plus'" (click)="addJoinRequests(post,i)"></i>
+    <div *ngIf="userType == 'searchUser' && post.type=='P'" class="request-icon"><i
+        [ngClass]="isClicked[i]?'pi pi-user-minus':'pi pi-user-plus cursor-pointer'"
+        (click)="addJoinRequests(post,i)"></i>
     </div>
 
 
   </div>
   <div *ngIf="showComment[i]" class="p-2">
     <span class="p-input-icon-right">
-      <i class="pi pi-send" (click)="addComment(post,i)"></i>
+      <i class="pi pi-send cursor-pointer" (click)="addComment(post,i)"></i>
       <input type="text" pInputText [(ngModel)]="commentText[i]" (keydown.enter)="addComment(post,i)" />
     </span>
     <div class="flex  m-4" *ngFor="let item of comments[i]">

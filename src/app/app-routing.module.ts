@@ -19,7 +19,7 @@ const routes: Routes = [
         path: 'profile',
         component: ProfileComponent,
       },
-      { path: 'project', component: ProjectComponent },
+      { path: 'project/:id', component: ProjectComponent },
     ],
   },
   { path: '', redirectTo: 'login', pathMatch: 'full' },

@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment.local';
   providedIn: 'root',
 })
 export class PostService {
+  private apiKey = '93ec0cfc2ba98e1572cf93e42c1e6b3b';
   constructor(private http: HttpClient) {}
   getSignedUrl(fileName: string, contentType: string): Observable<any> {
     const url =
@@ -47,5 +48,15 @@ export class PostService {
   getFeed(userId: string) {
     const url = environment.apiUrl + `users/${userId}/feed`;
     return this.http.get(url);
+  }
+
+  getLatestTechNews(): Observable<any> {
+    const url = `https://gnews.io/api/v4/top-headlines?topic=technology&lang=en&token=${this.apiKey}`;
+    return this.http.get<any>(url);
+  }
+
+  removeJoinRequest(postId: string, userId: string) {
+    const url = environment.apiUrl + `posts/${postId}/joinRequests/${userId}`;
+    return this.http.delete(url);
   }
 }

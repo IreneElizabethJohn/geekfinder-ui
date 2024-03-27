@@ -8,17 +8,19 @@ import { PostService } from '../post/post.service';
 })
 export class UserDashboardComponent {
   constructor(private postService: PostService) {}
-  userId: string = '';
+  userId: string = localStorage.getItem('id')!;
   posts: any = [];
   liked: any = [];
   showComment: any = [];
   showRequests: any = [];
   isClicked: any = [];
+  articles: any = [];
   ngOnInit() {
-    this.postService
-      .getFeed(localStorage.getItem('id')!)
-      .subscribe((resp: any) => {
-        this.posts = resp.relevantPosts;
-      });
+    this.postService.getFeed(this.userId).subscribe((resp: any) => {
+      this.posts = resp.relevantPosts;
+    });
+    this.postService.getLatestTechNews().subscribe((news) => {
+      this.articles = news.articles;
+    });
   }
 }

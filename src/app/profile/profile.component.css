@@ -12,11 +12,15 @@
     }
   }
   .p-avatar.p-avatar-xl {
-    width: 5rem;
-    height: 5rem;
+    width: 6rem;
+    height: 6rem;
+  }
+  .p-avatar.p-avatar-circle {
+    border: 3px solid white;
   }
   .p-card .p-card-title {
     text-align: center;
+    margin-left: 24px;
   }
   .img-container {
     position: relative;
@@ -49,6 +53,7 @@
   }
   .profile-card > .p-card {
     box-shadow: none;
+    width: 100%;
   }
 }
 
@@ -77,5 +82,4 @@
 }
 .post-container {
   width: 97%;
-  padding-left: 35px;
 }

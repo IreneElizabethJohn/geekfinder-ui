@@ -1,13 +1,23 @@
-app-post {
-  width: 61%;
+.project-container {
+  width: 20%;
+  position: sticky;
 }
-
-:host ::ng-deep {
-  .p-splitter-horizontal > .p-splitter-gutter {
-    width: 0px !important;
-  }
-
-  .p-splitter {
-    border: none;
-  }
+.post-container {
+  width: 45%;
+  position: relative;
+}
+.tech-news-container {
+  width: 25%;
+  position: sticky;
+}
+a:link {
+  text-decoration: none;
+  color: #000;
+}
+a:hover {
+  text-decoration: underline;
+}
+::ng-deep .p-card {
+  box-shadow: 0 0px 3px -1px rgba(0, 0, 0, 0.2), 0 1px 3px 0 rgba(0, 0, 0, 0.14),
+    0 1px 6px 0 rgba(0, 0, 0, 0.12);
 }
