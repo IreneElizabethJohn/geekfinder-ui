@@ -30,6 +30,7 @@ export interface UserDetails {
   posts: [];
   postType?: string;
   projects: [];
+  socialLinks?: SocialLink;
 }
 export interface Following {
   _id: string;
@@ -48,4 +49,9 @@ export interface Education {
   instituteName?: string;
   fromDate: string;
   toDate: string;
+}
+
+export interface SocialLink {
+  github?: string;
+  linkedIn?: string;
 }

@@ -45,6 +45,8 @@ export class ProfileComponent {
   posts = [];
   displayPosts = true;
   isDisabledonFollowing: boolean = false;
+  linkedIn: any = '';
+  github: any = '';
 
   constructor(private appService: AppService) {}
 
@@ -73,6 +75,9 @@ export class ProfileComponent {
     this.followingCount = data.following.length;
     this.posts = data.posts;
     this.userData = data;
+    this.bioText = this.userData.bio;
+    this.github = this.userData.socialLinks?.github;
+    this.linkedIn = this.userData.socialLinks?.linkedIn;
     this.randomImg =
       this.random_images[Math.floor(Math.random() * this.random_images.length)];
     if (this.userType == 'signedUser') {
@@ -96,10 +101,11 @@ export class ProfileComponent {
   editBio(event: MouseEvent) {
     event.stopPropagation();
     this.visibleBioPopup = true;
+    this.type = 'BIO';
+    this.action = 'EDIT';
   }
 
   changeBio() {
-    this.finalPayload = { bio: this.bioText };
     this.type = 'BIO';
   }
 
@@ -167,7 +173,10 @@ export class ProfileComponent {
     }
     if (this.action == 'EDIT') {
       if (this.type == 'BIO') {
-        this.finalPayload = this.finalPayload;
+        this.finalPayload = {
+          bio: this.bioText,
+          socialLinks: { github: this.github, linkedIn: this.linkedIn },
+        };
       }
       if (this.type == 'EDU') {
         this.eduEvents[this.editedIndex] = {
@@ -222,6 +231,8 @@ export class ProfileComponent {
       .updateUserDetails(localStorage.getItem('id')!, this.finalPayload)
       .subscribe((data: UserDetails) => {
         this.displayBio = data.bio;
+        this.github = data.socialLinks?.github;
+        this.linkedIn = data.socialLinks?.linkedIn;
         this.eduEvents = data.education;
         this.expEvents = data.experience;
       });
@@ -238,5 +249,9 @@ export class ProfileComponent {
           this.commonApi(data);
         });
     });
+  }
+
+  navigateToWebsite(url: string) {
+    window.open(url, '_blank');
   }
 }
