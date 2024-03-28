@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://portfolio.com/', //edit later
+  apiUrl: 'http://54.253.204.106',
 };

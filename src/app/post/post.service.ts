@@ -1,17 +1,22 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment.local';
+import { EnvironmentService } from 'src/environments/environment.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PostService {
+  constructor(
+    private http: HttpClient,
+    private environmentService: EnvironmentService
+  ) {}
   private apiKey = '93ec0cfc2ba98e1572cf93e42c1e6b3b';
-  constructor(private http: HttpClient) {}
+  private apiUrl = this.environmentService.getApiUrl();
+
   getSignedUrl(fileName: string, contentType: string): Observable<any> {
     const url =
-      environment.apiUrl +
+      this.apiUrl +
       `posts/signedUrl?fileName=${fileName}&contentType=${contentType}`;
     return this.http.get<any>(url);
   }
@@ -21,32 +26,32 @@ export class PostService {
   }
 
   createPost(payload: any) {
-    const url = environment.apiUrl + `posts`;
+    const url = this.apiUrl + `posts`;
     return this.http.post(url, payload);
   }
 
   addLikes(payload: Object, postId: string) {
-    const url = environment.apiUrl + `posts/${postId}/likes`;
+    const url = this.apiUrl + `posts/${postId}/likes`;
     return this.http.post(url, payload);
   }
 
   addComments(payload: Object, postId: string) {
-    const url = environment.apiUrl + `posts/${postId}/comments`;
+    const url = this.apiUrl + `posts/${postId}/comments`;
     return this.http.post(url, payload);
   }
 
   getComments(postId: string) {
-    const url = environment.apiUrl + `posts/${postId}/comments`;
+    const url = this.apiUrl + `posts/${postId}/comments`;
     return this.http.get(url);
   }
 
   addJoinRequests(payload: Object, postId: string) {
-    const url = environment.apiUrl + `posts/${postId}/joinRequests`;
+    const url = this.apiUrl + `posts/${postId}/joinRequests`;
     return this.http.post(url, payload);
   }
 
   getFeed(userId: string) {
-    const url = environment.apiUrl + `users/${userId}/feed`;
+    const url = this.apiUrl + `users/${userId}/feed`;
     return this.http.get(url);
   }
 
@@ -56,7 +61,7 @@ export class PostService {
   }
 
   removeJoinRequest(postId: string, userId: string) {
-    const url = environment.apiUrl + `posts/${postId}/joinRequests/${userId}`;
+    const url = this.apiUrl + `posts/${postId}/joinRequests/${userId}`;
     return this.http.delete(url);
   }
 }
