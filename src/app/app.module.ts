@@ -40,6 +40,7 @@ import { ProjectListCardComponent } from './project-list-card/project-list-card.
 import { TabViewModule } from 'primeng/tabview';
 import { DragDropModule } from 'primeng/dragdrop';
 import { TagModule } from 'primeng/tag';
+import { ImageModule } from 'primeng/image';
 
 @NgModule({
   declarations: [
@@ -84,6 +85,7 @@ import { TagModule } from 'primeng/tag';
     TabViewModule,
     DragDropModule,
     TagModule,
+    ImageModule,
   ],
   providers: [
     {

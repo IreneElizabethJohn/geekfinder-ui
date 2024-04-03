@@ -74,7 +74,6 @@ export class ProjectComponent {
 
   onDragStart(event: any, item: any, fromColumn: string) {
     this.draggedItem = { item: item, from: fromColumn };
-    console.log('drag', this.draggedItem);
   }
 
   onDrop(event: any, targetColumn: string) {
@@ -107,10 +106,7 @@ export class ProjectComponent {
 
     this.projectService
       .patchTask(this.changeStatus, draggedItem._id)
-      .subscribe((x) => {
-        console.log('drag id', draggedItem._id);
-        console.log('status changed', this.changeStatus);
-      });
+      .subscribe((x) => {});
   }
 
   constructor(
@@ -125,13 +121,11 @@ export class ProjectComponent {
       .subscribe((details) => {
         this.projectDetails = details;
         this.teamList = this.projectDetails.collaborators;
-        console.log('details', this.projectDetails);
         const userRole = this.projectDetails.collaborators.filter(
           (c: any) => c.user._id == localStorage.getItem('id')
         );
         this.userRole = userRole[0]?.role;
         this.taskCreator = userRole[0].user.displayName;
-        console.log('creator', this.taskCreator);
       });
   }
 
@@ -154,7 +148,6 @@ export class ProjectComponent {
       ownerId: this.projectDetails.owner,
     };
 
-    console.log('payload', payload);
     this.projectService.removeProject(payload).subscribe((res) => {
       this.openDeleteModal = false;
       this.router.navigateByUrl('/home/dashboard');
@@ -165,9 +158,7 @@ export class ProjectComponent {
     const payload = { role: event.value };
     this.projectService
       .changeCollaboratorRole(projectId, collaboratorId, payload)
-      .subscribe((resp) => {
-        console.log('role updated');
-      });
+      .subscribe((resp) => {});
   }
   removeCollaborator(projectId: string, collaboratorId: string) {
     this.projectService
@@ -187,11 +178,9 @@ export class ProjectComponent {
         assignee: this.assignee.user._id,
         type: this.taskType,
       };
-      console.log('add payload', payload);
       this.projectService
         .createTask(payload, this.route.snapshot.params['id'])
         .subscribe((x) => {
-          console.log('task created');
           this.getItems();
         });
     }
@@ -204,10 +193,7 @@ export class ProjectComponent {
         assignee: this.assignee.user._id,
         type: this.taskType,
       };
-      console.log('edit payload', payload);
       this.projectService.patchTask(payload, this.taskId).subscribe((resp) => {
-        console.log('edited');
-
         this.getItems();
       });
     }
@@ -230,7 +216,6 @@ export class ProjectComponent {
     this.projectService
       .getTask(this.route.snapshot.params['id'])
       .subscribe((response: any) => {
-        console.log(response);
         this.column1Items = response.filter(
           (item: any) => item.status == 'TODO'
         );

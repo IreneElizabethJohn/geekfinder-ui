@@ -15,10 +15,8 @@ export class ProjectListCardComponent {
   constructor(private router: Router, private userService: AppService) {}
 
   ngOnChanges() {
-    console.log('project card id', this.id);
     this.userService.getUserProjects(this.id).subscribe((projects) => {
       this.projectList = projects;
-      console.log('projectlist', this.projectList);
     });
     this.getRandomColor();
   }

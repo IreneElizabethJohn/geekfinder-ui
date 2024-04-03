@@ -47,6 +47,7 @@ export class ProfileComponent {
   isDisabledonFollowing: boolean = false;
   linkedIn: any = '';
   github: any = '';
+  shouldRenderChild: any;
 
   constructor(private appService: AppService) {}
 
@@ -58,6 +59,8 @@ export class ProfileComponent {
       this.userId = data.id;
       this.appService.getUserDetails(data.id).subscribe({
         next: (res: any) => {
+          this.shouldRenderChild = false;
+          setTimeout(() => (this.shouldRenderChild = true));
           this.commonApi(res);
         },
       });

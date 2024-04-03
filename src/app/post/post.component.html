@@ -14,7 +14,7 @@
   </div>
   <div class="p-3">{{post.content}}</div>
   <div *ngIf="post.imageUrl" class="post-image">
-    <img src="{{post.imageUrl}}" alt="postImage" height="50%" width="50%">
+    <p-image src="{{post.imageUrl}}" alt="Image" height="50%" width="50%" [preview]="true"></p-image>
   </div>
 
   <div class="flex justify-content-between mt-3">

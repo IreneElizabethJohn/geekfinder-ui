@@ -33,6 +33,8 @@ export class HeaderComponent {
   ];
   @ViewChild('menu') menu!: Menu;
   projectName: string = '';
+  conflictMsg = '';
+
   constructor(
     private appService: AppService,
     private router: Router,
@@ -107,7 +109,7 @@ export class HeaderComponent {
 
   onSubmit() {
     let payload: any;
-    if (this.chosenType == 'off') {
+    if (this.chosenType == 'off' && this.projectName.length == 0) {
       payload = {
         ownerId: localStorage.getItem('id'),
         content: this.postDescription,
@@ -125,11 +127,18 @@ export class HeaderComponent {
     if (this.fileInput._files.length > 0) {
       payload.key = this.key;
     }
-    this.postService.createPost(payload).subscribe(() => {
-      this.openPostModal = false;
-      this.appService.setData(localStorage.getItem('id'), 'signedUser');
-      this.router.navigateByUrl('/home');
-      this.router.navigateByUrl('/home/profile');
+    this.postService.createPost(payload).subscribe({
+      next: () => {
+        this.openPostModal = false;
+        this.appService.setData(localStorage.getItem('id'), 'signedUser');
+        this.router.navigateByUrl('/home');
+        this.router.navigateByUrl('/home/profile');
+      },
+      error: (err) => {
+        if (err.error.error == 'Conflict') {
+          this.conflictMsg = err.error.message;
+        }
+      },
     });
   }
 
@@ -139,6 +148,7 @@ export class HeaderComponent {
     this.chosenType = 'off';
     this.fileInput.clear();
     this.projectName = '';
+    this.conflictMsg = '';
   }
 
   @HostListener('document:scroll', ['$event'])
