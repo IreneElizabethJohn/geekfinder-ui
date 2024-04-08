@@ -84,7 +84,7 @@
   width: 97%;
 }
 
-@media (max-width: 798px) {
+@media (max-width: 768px) {
   .container.grid {
     flex-direction: column-reverse;
   }
@@ -99,5 +99,8 @@
     .p-accordion {
       width: 112%;
     }
+  }
+  .links {
+    flex-direction: column;
   }
 }
