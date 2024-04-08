@@ -18,7 +18,7 @@
     <p-dataView  [value]="teamList" >
       <ng-template let-product pTemplate="listItem">
         <div class="col-12">
-          <div class="flex flex-column sm:flex-row xl:align-items-start p-2 gap-4">
+          <div class="flex  sm:flex-row xl:align-items-start p-2 gap-4">
             <p-avatar image="{{product.user.avatarUrl}}" styleClass="mr-2" size="large" shape="circle"></p-avatar>
 
             <div
@@ -43,8 +43,8 @@
     <div class="flex justify-content-end">
       <p-button label="Add Task" class="ml-2" (onClick)="openModal('ADD')" *ngIf="userRole=='owner'||userRole=='admin'"></p-button>
     </div>
-<div class="flex sm:flex-column xl:flex-row">
-    <div class="p-2  xl:w-26rem" pDroppable (onDrop)="onDrop($event, 'column1')">
+<div class="flex task-container">
+    <div class="p-2 xl:w-26rem" pDroppable (onDrop)="onDrop($event, 'column1')">
       <p class="text-center font-bold text-xl p-1">TODO</p>
       <ul class="list-none flex flex-column gap-2 p-0 m-0">
         <li *ngFor="let item of column1Items;index as i" class="p-2" pDraggable (dragstart)="onDragStart($event, item, 'column1')">
@@ -143,7 +143,7 @@
 </p-tabView>
 
 <p-dialog header="{{action=='EDIT'?'EDIT':'ADD'}} TASK"
-  [(visible)]="openTaskModal" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+  [(visible)]="openTaskModal" [modal]="true"  [draggable]="false" [resizable]="false">
   <div class="grid task-modal">
     <div class="col-2 flex flex-column justify-content-around">
       <div class="font-bold">Title</div>
@@ -196,7 +196,7 @@
   </div>
 </p-dialog>
 
-<p-dialog header="EDIT PROJECT DESCRIPTION" [(visible)]="openEditModal" [modal]="true" [style]="{ width: '50vw' }"
+<p-dialog header="EDIT PROJECT DESCRIPTION" [(visible)]="openEditModal" [modal]="true" 
   [draggable]="false" [resizable]="false">
   <div class="flex align-items-center">
     <span class="mr-2">Description</span>
@@ -204,7 +204,7 @@
   </div>
   <p-button class="flex justify-content-end mt-2" label="Save" (onClick)="onSave()"></p-button>
 </p-dialog>
-<p-dialog header="DELETE PROJECT" [(visible)]="openDeleteModal" [modal]="true" [style]="{ width: '40vw' }" [draggable]="
+<p-dialog header="DELETE PROJECT" [(visible)]="openDeleteModal" [modal]="true"  [draggable]="
   false" [resizable]="false">
   <div class="flex justify-content-start align-items-center">
     <i class="pi pi-info-circle mr-2" style="font-size: 2rem"></i> <span>Are you sure you want to delete this

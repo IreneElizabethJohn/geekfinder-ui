@@ -47,7 +47,7 @@
               <p-dataView #dv [value]="chosenList">
                 <ng-template let-product pTemplate="listItem">
                   <div class="col-12">
-                    <div class="flex flex-column xl:flex-row xl:align-items-start p-2 gap-4">
+                    <div class="flex  xl:flex-row xl:align-items-start p-2 gap-4">
                       <p-avatar image="{{product.avatarUrl}}" styleClass="mr-2" size="large" shape="circle">
                       </p-avatar>
                       <div
@@ -131,8 +131,7 @@
     </div>
 </div>
 
-<p-dialog header="UPDATE BIO" [(visible)]="visibleBioPopup" [modal]="true" [style]="{ width: '50vw' }"
-  [draggable]="false" [resizable]="false">
+<p-dialog header="UPDATE BIO" [(visible)]="visibleBioPopup" [modal]="true" [draggable]="false" [resizable]="false">
   <div class="flex align-items-center">
     <span class="mr-2 font-bold">Add summary </span>
     <textarea rows="5" cols="85" pInputTextarea [(ngModel)]="bioText" (ngModelChange)="changeBio()"></textarea>
@@ -150,7 +149,7 @@
 </p-dialog>
 
 <p-dialog header="{{action=='EDIT'?'UPDATE':'ADD'}}  {{type=='EXP'?'EXPERIENCE':'EDUCATION'}}"
-  [(visible)]="visibleEduExpPopup" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+  [(visible)]="visibleEduExpPopup" [modal]="true"  [draggable]="false" [resizable]="false">
   <div class="grid detail-modal">
     <div class="col-2 flex flex-column justify-content-around">
       <div>{{type=='EXP'?'Designation':'Title'}}</div>

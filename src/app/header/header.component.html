@@ -26,6 +26,13 @@
 <p-sidebar [(visible)]="display" position="right">
   <ul class="list-none p-0 m-0 overflow-hidden">
     <li >
+      <a pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple"
+      routerLink="/home/dashboard" (click)="display=false">
+          <i class="pi pi-home mr-2"></i>
+          <span class="font-medium">Dashboard</span>
+      </a>
+  </li>
+    <li >
         <a pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple"
         (click)="onProfileClick()">
             <i class="pi pi-user mr-2"></i>
@@ -42,7 +49,7 @@
   </ul>
 </p-sidebar>
 
-<p-dialog header="ADD POST" [(visible)]="openPostModal" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false"
+<p-dialog header="ADD POST" [(visible)]="openPostModal" [modal]="true"  [draggable]="false"
   [resizable]="false">
   <div class="flex justify-content-between mb-3">
     <div>
