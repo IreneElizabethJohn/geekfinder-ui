@@ -24,3 +24,26 @@ strong {
 .header {
   padding: 20px 0 0 30px;
 }
+
+@media (max-width: 768px) {
+  .header {
+    text-align: center;
+  }
+  .container {
+    flex-direction: column;
+  }
+  .signin-image {
+    width: 50%;
+    height: 50%;
+    transform: translate(50%, 0%);
+  }
+  .p-inputgroup,
+  .p-button {
+    width: 100%;
+  }
+  .sign-up-img {
+    width: 50%;
+    height: 50%;
+    transform: translate(50%, 0%);
+  }
+}

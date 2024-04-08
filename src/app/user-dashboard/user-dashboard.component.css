@@ -1,6 +1,5 @@
 .project-container {
   width: 20%;
-  position: sticky;
 }
 .post-container {
   width: 45%;
@@ -8,7 +7,6 @@
 }
 .tech-news-container {
   width: 25%;
-  position: sticky;
 }
 a:link {
   text-decoration: none;
@@ -20,4 +18,31 @@ a:hover {
 ::ng-deep .p-card {
   box-shadow: 0 0px 3px -1px rgba(0, 0, 0, 0.2), 0 1px 3px 0 rgba(0, 0, 0, 0.14),
     0 1px 6px 0 rgba(0, 0, 0, 0.12);
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .project-container,
+  .post-container,
+  .tech-news-container {
+    width: 100%;
+  }
+
+  .post-container {
+    order: 1;
+  }
+  .project-container {
+    order: 2;
+  }
+  .tech-news-container {
+    order: 3;
+  }
+
+  .project-title,
+  .font-bold {
+    font-size: smaller;
+  }
 }

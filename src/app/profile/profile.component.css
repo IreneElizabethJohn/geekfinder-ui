@@ -83,3 +83,21 @@
 .post-container {
   width: 97%;
 }
+
+@media (max-width: 798px) {
+  .container.grid {
+    flex-direction: column-reverse;
+  }
+  .col-3,
+  .col-9 {
+    width: 100%;
+  }
+  :host ::ng-deep {
+    .p-splitter {
+      flex-direction: column-reverse;
+    }
+    .p-accordion {
+      width: 112%;
+    }
+  }
+}

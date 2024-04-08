@@ -41,6 +41,7 @@ import { TabViewModule } from 'primeng/tabview';
 import { DragDropModule } from 'primeng/dragdrop';
 import { TagModule } from 'primeng/tag';
 import { ImageModule } from 'primeng/image';
+import { SidebarModule } from 'primeng/sidebar';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import { ImageModule } from 'primeng/image';
     DragDropModule,
     TagModule,
     ImageModule,
+    SidebarModule,
   ],
   providers: [
     {

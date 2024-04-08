@@ -7,6 +7,7 @@ import { FileUpload } from 'primeng/fileupload';
 import { HttpHeaders } from '@angular/common/http';
 import { PostService } from '../post/post.service';
 import { Menu } from 'primeng/menu';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-header',
@@ -34,37 +35,27 @@ export class HeaderComponent {
   @ViewChild('menu') menu!: Menu;
   projectName: string = '';
   conflictMsg = '';
+  isHandset: any;
+  display = false;
 
   constructor(
     private appService: AppService,
     private router: Router,
-    private postService: PostService
-  ) {}
+    private postService: PostService,
+    private breakpointObserver: BreakpointObserver
+  ) {
+    this.breakpointObserver
+      .observe([Breakpoints.HandsetPortrait, Breakpoints.HandsetLandscape])
+      .subscribe((result: any) => {
+        this.isHandset = result.matches;
+      });
+  }
 
   ngOnInit() {
     const userId = localStorage.getItem('id');
     this.appService.setData(userId, 'signedUser');
     const link = localStorage.getItem('avatarUrl');
     this.avatarLink = link!;
-    this.menuItems = [
-      {
-        label: 'Profile',
-        icon: 'pi pi-user',
-        command: () => {
-          this.appService.setData(userId, 'signedUser');
-          this.isMenuVisible = false;
-          this.router.navigateByUrl('/home/profile');
-        },
-      },
-      {
-        label: 'Logout',
-        icon: 'pi pi-power-off',
-        command: () => {
-          this.router.navigateByUrl('/login');
-          localStorage.removeItem('token');
-        },
-      },
-    ];
   }
 
   search() {
@@ -78,10 +69,18 @@ export class HeaderComponent {
   }
 
   showMenu(event: any) {
-    this.isMenuVisible = !this.isMenuVisible;
+    this.display = !this.display;
     // event.stopPropagation();
   }
-
+  onProfileClick() {
+    this.appService.setData(localStorage.getItem('id'), 'signedUser');
+    this.display = false;
+    this.router.navigateByUrl('/home/profile');
+  }
+  onLogOutClick() {
+    this.router.navigateByUrl('/login');
+    localStorage.removeItem('token');
+  }
   callSearchProfile(item: any) {
     this.searchKeyword = item.displayName;
     item.userType = 'searchUser';
