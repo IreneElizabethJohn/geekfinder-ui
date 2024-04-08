@@ -131,7 +131,7 @@
     </div>
 </div>
 
-<p-dialog header="UPDATE BIO" [(visible)]="visibleBioPopup" [modal]="true" [draggable]="false" [resizable]="false">
+<p-dialog header="UPDATE BIO" [(visible)]="visibleBioPopup" [modal]="true" [draggable]="false" [resizable]="false" [style]="{ width: '95vw' }">
   <div class="flex align-items-center">
     <span class="mr-2 font-bold">Add summary </span>
     <textarea rows="5" cols="85" pInputTextarea [(ngModel)]="bioText" (ngModelChange)="changeBio()"></textarea>

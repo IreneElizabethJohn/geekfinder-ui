@@ -51,4 +51,10 @@ a:visited {
       width: 20rem;
     }
   }
+  p-dialog {
+    width: 80vw;
+    .add-post {
+      flex-direction: column;
+    }
+  }
 }
